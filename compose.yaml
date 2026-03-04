@@ -2,21 +2,22 @@
 services:
 ###> doctrine/doctrine-bundle ###
   database:
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
+    container_name: database
+    image: mariadb # Because it's got less problematic Arm64 support
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
-    healthcheck:
-      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-app}"]
-      timeout: 5s
-      retries: 5
-      start_period: 60s
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: ${MYSQL_DB:-app}
+      MYSQL_USER: ${MYSQL_USER:-symfony}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ChangeMe}
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
+      - database_data:/var/lib/mysql:rw
+    ports:
+      # Local port chosen by https://www.random.org/integers/?num=1&min=5001&max=49151&col=5&base=10&format=html&rnd=new
+      - "23281:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
 ###< doctrine/doctrine-bundle ###
 
 volumes:

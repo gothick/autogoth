@@ -1,4 +1,4 @@
-docker/data
+./database_data
 
 ###> symfony/framework-bundle ###
 /.env.local

@@ -10,7 +10,7 @@ services:
       MYSQL_USER: ${MYSQL_USER:-symfony}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD:-ChangeMe}
     volumes:
-      - database_data:/var/lib/mysql:rw
+      - ./database_data:/var/lib/mysql:rw
     ports:
       # Local port chosen by https://www.random.org/integers/?num=1&min=5001&max=49151&col=5&base=10&format=html&rnd=new
       - "23281:3306"
@@ -20,7 +20,7 @@ services:
       retries: 10
 ###< doctrine/doctrine-bundle ###
 
-volumes:
+# volumes:
 ###> doctrine/doctrine-bundle ###
-  database_data:
+
 ###< doctrine/doctrine-bundle ###

@@ -1,4 +1,5 @@
 database_data
+*.code-workspace
 
 ###> symfony/framework-bundle ###
 /.env.local

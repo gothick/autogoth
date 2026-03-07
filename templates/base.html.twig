@@ -12,6 +12,13 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% block container %}<div class="{% block containerclass %}default-container{% endblock %} container-xl d-flex h-100 flex-column px-0">{% endblock %}
+            <div class="row">
+                <div class="col-sm">
+                    {{ include('_nav.html.twig') }}
+                </div>
+            </div>
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

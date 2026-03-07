@@ -1,0 +1,29 @@
+<nav class="navbar navbar-expand-lg navbar-light px-2" style="background-color: #f2f2fd;">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-brand">
+        {% block siteTitle %}<span class="font-weight-bold site-title"><a href="{{ path('app_home') }}">Autogoth</a></span>{% endblock %}
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav me-auto">
+        {#    <a class="nav-item nav-link {% if app.request.attributes.get('_route') == 'home' %} active {% endif %}" href="{{ path('home') }}">Home</a>
+            <a class="nav-item nav-link {% if app.request.attributes.get('_route') starts with 'wanders' %} active {% endif %}" href="{{ path('wanders_index') }}">Wanders</a>
+            <a class="nav-item nav-link {% if app.request.attributes.get('_route') starts with 'search' %} active {% endif %}" href="{{ path('search_index') }}">Search</a>
+            <a class="nav-item nav-link {% if app.request.attributes.get('_route') starts with 'experimental' %} active {% endif %}" href="{{ path('experimental_index') }}">Experimental</a>
+            <a class="nav-item nav-link {% if app.request.attributes.get('_route') starts with 'stats' %} active {% endif %}" href="{{ path('stats_index') }}">Statistics</a>
+            <a class="nav-item nav-link {% if app.request.attributes.get('_route') starts with 'about_' %} active {% endif %}" href="{{ path('about_index') }}">About</a>
+        #}
+        </div>
+        <div class="navbar-nav">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+            {# <a class="nav-item nav-link" href="{{ path('user_index') }}">👤</a>
+            <a class="nav-item nav-link" href="{{ path('admin_index') }}">Admin</a>
+            #}
+            {{ include('security/_logout.html.twig') }}
+            {% else %}
+            <a class="nav-item nav-link" href="{{ path('app_login') }}">Log in</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

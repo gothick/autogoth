@@ -51,10 +51,13 @@ class CreateAdminUserCommand extends Command
         $question->setHidden(true);
         $helper = new QuestionHelper();
         $password = $helper->ask($input, $output, $question);
+        $question = new Question("Please enter a name for new user '{$email}': ");
+        $name = $helper->ask($input, $output, $question);
 
         try {
             $user = new User();
             $user->setEmail($email);
+            $user->setName($name);
             $user->setPassword($this->passwordHasher->hashPassword($user, $password));
             $user->setRoles(['ROLE_ADMIN']);
             $this->entityManager->persist($user);

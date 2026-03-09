@@ -13,9 +13,17 @@ class RemoteServiceList
     {
         $this->services[$alias] = $service;
     }
-    public function getServiceAliases(): array
+
+    /**
+     * @return string[]
+     */
+    public function getServiceNamesByAlias(): array
     {
-        return array_keys($this->services);
+        $names = [];
+        foreach ($this->services as $alias => $service) {
+            $names[$alias] = $service->getName();
+        }
+        return $names;
     }
     public function getService(string $alias): ?RemoteServiceInterface
     {

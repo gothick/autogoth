@@ -3,9 +3,17 @@
 namespace App\RemoteService;
 
 use App\Entity\User;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 class RemoteServiceSpotify implements RemoteServiceInterface
 {
+    public function __construct(
+        #[Autowire(env: 'SPOTIFY_CLIENT_ID')] public readonly string $clientId,
+        #[Autowire(env: 'SPOTIFY_CLIENT_SECRET')] public readonly string $clientSecret
+    )
+    {
+    }
+
     public function getName(): string
     {
         return 'Spotify';

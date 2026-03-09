@@ -11,12 +11,13 @@
 <div class="example-wrapper">
     <h1>Hello {{ user_name }}! ✅</h1>
 
-    This friendly message is coming from:
     <ul>
-        <li>Your controller at <code>/Users/matt/Sites/mysites/autogoth/src/Controller/DashboardController.php</code></li>
-        <li>Your template at <code>/Users/matt/Sites/mysites/autogoth/templates/dashboard/index.html.twig</code></li>
+        {% for alias, name in remote_services %}
+            <li data-alias="{{ alias }}">{{ name }}</li>
+        {% endfor %}
     </ul>
 
-    
+
+
 </div>
 {% endblock %}

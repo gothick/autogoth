@@ -12,12 +12,7 @@
     <h1>Autogoth</h1>
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
         <p>Welcome back, {{ app.user.userIdentifier }}!</p>
-
-        <ul>
-        {% for remote_service_name in remote_service_names %}
-            <li>{{ remote_service_name }}</li>
-        {% endfor %}
-        </ul>
+        <p><a href="{{ path('app_dashboard') }}">Go to your dashboard</a></p>
     {% else %}
         <p>This is for me, not for you. Sorry.</p>
     {% endif %}

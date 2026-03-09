@@ -12,9 +12,13 @@ final class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(RemoteServiceList $remoteServiceList): Response
     {
+        $service = $remoteServiceList->getService('app.remote_service.spotify');
+        $service->getName();
+        dd($service);
+
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
-            'remote_service_names' => $remoteServiceList->getServiceNames(),
+            'remote_service_names' => $remoteServiceList->getServiceAliases(),
         ]);
     }
 }

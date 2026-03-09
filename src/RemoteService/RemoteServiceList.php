@@ -9,12 +9,16 @@ class RemoteServiceList
      */
     private array $services = [];
 
-    public function addService(RemoteServiceInterface $service): void
+    public function addService(RemoteServiceInterface $service, $alias): void
     {
-        $this->services[] = $service;
+        $this->services[$alias] = $service;
     }
-    public function getServiceNames(): array
+    public function getServiceAliases(): array
     {
-        return array_map(fn(RemoteServiceInterface $service) => $service->getName(), $this->services);
+        return array_keys($this->services);
+    }
+    public function getService(string $alias): ?RemoteServiceInterface
+    {
+        return $this->services[$alias] ?? null;
     }
 }

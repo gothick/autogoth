@@ -23,8 +23,14 @@ class RemoteServicePass implements CompilerPassInterface
         $taggedServices = $container->findTaggedServiceIds('app.remote_service');
 
         foreach ($taggedServices as $id => $tags) {
-            // add the remote service to the RemoteServiceList service
-            $definition->addMethodCall('addService', [new Reference($id)]);
+
+            // a service could have the same tag twice
+            foreach ($tags as $attributes) {
+                $definition->addMethodCall('addService', [
+                    new Reference($id),
+                    $attributes['alias'],
+                ]);
+            }
         }
     }
 }

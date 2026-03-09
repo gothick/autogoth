@@ -7,7 +7,7 @@ use App\Entity\User;
 
 // Everything that implements this interface will be automatically tagged with "app.remote_service"
 // and added to the RemoteServiceList service.
-#[AutoconfigureTag('app.remote_service')]
+// #[AutoconfigureTag('app.remote_service')]
 interface RemoteServiceInterface
 {
     public function getName(): string;

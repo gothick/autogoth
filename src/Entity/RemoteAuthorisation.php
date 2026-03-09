@@ -14,7 +14,7 @@ class RemoteAuthorisation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $remoteServiceType = null;
+    private ?string $remoteServiceAlias = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $accessToken = null;
@@ -31,14 +31,14 @@ class RemoteAuthorisation
         return $this->id;
     }
 
-    public function getRemoteServiceType(): ?string
+    public function getRemoteServiceAlias(): ?string
     {
-        return $this->remoteServiceType;
+        return $this->remoteServiceAlias;
     }
 
-    public function setRemoteServiceType(string $remoteServiceType): static
+    public function setRemoteServiceAlias(string $remoteServiceAlias): static
     {
-        $this->remoteServiceType = $remoteServiceType;
+        $this->remoteServiceAlias = $remoteServiceAlias;
 
         return $this;
     }

@@ -12,7 +12,7 @@
     <h1>Hello {{ user_name }}! ✅</h1>
 
     <ul>
-        {% for alias, name in remote_services %}
+        {% for alias, name in available_services %}
             <li data-alias="{{ alias }}">{{ name }}</li>
         {% endfor %}
     </ul>

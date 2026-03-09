@@ -10,17 +10,19 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use App\Entity\User;
 use App\RemoteService\RemoteServiceList;
 use App\RemoteService\RemoteServiceSpotify;
+use App\RemoteService\RemoteServiceHelper;
 
 #[IsGranted('ROLE_USER')]
 final class DashboardController extends AbstractController
 {
     #[Route('/dashboard', name: 'app_dashboard')]
 
-    public function index(#[CurrentUser] ?User $user, RemoteServiceList $remoteServiceList, RemoteServiceSpotify $spotify): Response
+    public function index(#[CurrentUser] ?User $user, RemoteServiceHelper $remoteServiceHelper): Response
     {
-        $spotify->authenticate($user);
+        $available_services = $remoteServiceHelper->getAvailableServicesForUser($user);
+
         return $this->render('dashboard/index.html.twig', [
-            'remote_services' => $remoteServiceList->getServiceNamesByAlias(),
+            'available_services' => $available_services,
             'user_name' => $user->getUserIdentifier()
         ]);
     }

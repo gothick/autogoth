@@ -2,7 +2,7 @@
 services:
 ###> doctrine/doctrine-bundle ###
   database:
-    container_name: database
+    container_name: database_autogoth
     image: mariadb # Because it's got less problematic Arm64 support
     environment:
       MYSQL_ROOT_PASSWORD: secret

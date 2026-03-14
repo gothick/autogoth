@@ -20,10 +20,27 @@ final class DashboardController extends AbstractController
     public function index(#[CurrentUser] ?User $user, RemoteServiceHelper $remoteServiceHelper): Response
     {
         $available_services = $remoteServiceHelper->getAvailableServicesForUser($user);
+        $user_services = $remoteServiceHelper->getConfiguredServicesForUser($user);
 
         return $this->render('dashboard/index.html.twig', [
+            'user_services' => $user_services,
             'available_services' => $available_services,
             'user_name' => $user->getUserIdentifier()
         ]);
+    }
+
+    #[Route('/connect/{alias}', name: 'connect_service', methods: ['POST'])]
+    public function connectService(string $alias, #[CurrentUser] ?User $user, RemoteServiceHelper $remoteServiceHelper): Response
+    {
+        $service = $remoteServiceHelper->getServiceByAlias($alias);
+
+        if (!$service) {
+            // TODO: Add flash handling to Dashboard template
+            $this->addFlash('error', 'Service not found.');
+            return $this->redirectToRoute('app_dashboard');
+        }
+
+        $redirectUrl = $service->getAuthorisationRoute();
+        return $this->redirectToRoute($redirectUrl);
     }
 }

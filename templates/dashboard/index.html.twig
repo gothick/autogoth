@@ -11,9 +11,22 @@
 <div class="example-wrapper">
     <h1>Hello {{ user_name }}! ✅</h1>
 
+    <h2>Your services:</h2>
+    <ul>
+        {% for alias, name in user_services %}
+            <li data-alias="{{ alias }}">{{ name }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Available services:</h2>
     <ul>
         {% for alias, name in available_services %}
-            <li data-alias="{{ alias }}">{{ name }}</li>
+            <li data-alias="{{ alias }}">{{ name }}
+            <form method="post" action="{{ path('connect_service', {'alias': alias}) }}">
+                <button type="submit">Connect</button>
+             </form>
+             </li>
+
         {% endfor %}
     </ul>
 

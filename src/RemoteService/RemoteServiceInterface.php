@@ -12,5 +12,5 @@ interface RemoteServiceInterface
 {
     public function getName(): string;
     public function getDescription(): string;
-    public function authenticate(User $forUser): bool;
+    public function getAuthorisationRoute(): string;
 }

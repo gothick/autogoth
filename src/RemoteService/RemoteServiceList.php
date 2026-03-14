@@ -25,7 +25,7 @@ class RemoteServiceList
         }
         return $names;
     }
-    public function getService(string $alias): ?RemoteServiceInterface
+    public function getServiceByAlias(string $alias): ?RemoteServiceInterface
     {
         return $this->services[$alias] ?? null;
     }

@@ -10,6 +10,7 @@
         "doctrine/doctrine-bundle": "^2.18",
         "doctrine/doctrine-migrations-bundle": "^3.7",
         "doctrine/orm": "^3.6",
+        "kerox/oauth2-spotify": "^2.0",
         "knpuniversity/oauth2-client-bundle": "^2.20",
         "phpdocumentor/reflection-docblock": "^6.0",
         "phpstan/phpdoc-parser": "^2.3",

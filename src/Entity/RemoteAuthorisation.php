@@ -2,8 +2,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Token\AccessToken;
+use App\Entity\Token\RefreshToken;
 use App\Repository\RemoteAuthorisationRepository;
 use Doctrine\ORM\Mapping as ORM;
+
 
 #[ORM\Entity(repositoryClass: RemoteAuthorisationRepository::class)]
 class RemoteAuthorisation
@@ -21,6 +24,12 @@ class RemoteAuthorisation
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $refreshToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $accessTokenExpires = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $refreshTokenExpires = null;
 
     #[ORM\ManyToOne(inversedBy: 'remoteAuthorisations')]
     #[ORM\JoinColumn(nullable: false)]
@@ -43,27 +52,49 @@ class RemoteAuthorisation
         return $this;
     }
 
-    public function getAccessToken(): ?string
+    public function getAccessToken(): ?AccessToken
     {
-        return $this->accessToken;
+        if ($this->accessToken === null) {
+            return null;
+        }
+        return new AccessToken(
+            $this->accessToken,
+            $this->accessTokenExpires
+        );
     }
 
-    public function setAccessToken(?string $accessToken): static
+    public function setAccessToken(?AccessToken $accessToken): static
     {
-        $this->accessToken = $accessToken;
-
+        if ($accessToken === null) {
+            $this->accessToken = null;
+            $this->accessTokenExpires = null;
+        } else {
+            $this->accessToken = $accessToken->getToken();
+            $this->accessTokenExpires = $accessToken->getExpires();
+        }
         return $this;
     }
 
-    public function getRefreshToken(): ?string
+    public function getRefreshToken(): ?RefreshToken
     {
-        return $this->refreshToken;
+        if ($this->refreshToken === null) {
+            return null;
+        }
+        return new RefreshToken(
+            $this->refreshToken,
+            $this->refreshTokenExpires
+        );
     }
 
-    public function setRefreshToken(?string $refreshToken): static
+    public function setRefreshToken(?RefreshToken $refreshToken): static
     {
-        $this->refreshToken = $refreshToken;
-
+        if ($refreshToken === null) {
+            $this->refreshToken = null;
+            $this->refreshTokenExpires = null;
+        } else {
+            $this->refreshToken = $refreshToken->getToken();
+            $this->refreshTokenExpires = $refreshToken->getExpires();
+        }
         return $this;
     }
 

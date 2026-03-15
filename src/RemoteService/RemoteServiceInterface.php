@@ -2,6 +2,8 @@
 
 namespace App\RemoteService;
 
+use App\Entity\Token\AccessToken;
+use App\Entity\Token\RefreshToken;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use App\Entity\User;
 
@@ -13,4 +15,7 @@ interface RemoteServiceInterface
     public function getName(): string;
     public function getDescription(): string;
     public function getAuthorisationRoute(): string;
+    public function saveAccessToken(User $user, AccessToken $accessToken): void;
+    public function saveRefreshToken(User $user, RefreshToken $refreshToken): void;
+    public function getAlias(): string;
 }

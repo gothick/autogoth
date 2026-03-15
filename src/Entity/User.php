@@ -163,6 +163,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->remoteAuthorisations;
     }
 
+    public function getOrAddRemoteAuthorisation(string $remoteServiceAlias): RemoteAuthorisation
+    {
+        foreach ($this->remoteAuthorisations as $remoteAuthorisation) {
+            if ($remoteAuthorisation->getRemoteServiceAlias() === $remoteServiceAlias) {
+                return $remoteAuthorisation;
+            }
+        }
+        $remoteAuthorisation = new RemoteAuthorisation();
+        $remoteAuthorisation->setRemoteServiceAlias($remoteServiceAlias);
+        $this->addRemoteAuthorisation($remoteAuthorisation);
+        return $remoteAuthorisation;
+    }
+
     public function addRemoteAuthorisation(RemoteAuthorisation $remoteAuthorisation): static
     {
         if (!$this->remoteAuthorisations->contains($remoteAuthorisation)) {

@@ -26,6 +26,15 @@ class RemoteServicePass implements CompilerPassInterface
 
             // a service could have the same tag twice
             foreach ($tags as $attributes) {
+                $alias = $attributes['alias'] ?? null;
+                if (!$alias) {
+                    continue;
+                }
+
+                // 1) Inject alias into the tagged service constructor
+                $serviceDef = $container->findDefinition($id);
+                $serviceDef->setArgument('$alias', $alias);
+
                 $definition->addMethodCall('addService', [
                     new Reference($id),
                     $attributes['alias'],

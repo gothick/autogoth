@@ -2,18 +2,19 @@
 
 namespace App\RemoteService;
 
+use App\Entity\Token\AccessToken;
+use App\Entity\Token\RefreshToken;
 use App\Entity\User;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Doctrine\ORM\EntityManagerInterface;
 
 class RemoteServiceSpotify implements RemoteServiceInterface
 {
     public function __construct(
-        #[Autowire(env: 'SPOTIFY_CLIENT_ID')] public readonly string $clientId,
-        #[Autowire(env: 'SPOTIFY_CLIENT_SECRET')] public readonly string $clientSecret
+        private readonly string $alias,
+        private readonly EntityManagerInterface $entityManager
     )
     {
     }
-
     public function getName(): string
     {
         return 'Spotify';
@@ -28,4 +29,30 @@ class RemoteServiceSpotify implements RemoteServiceInterface
     {
         return 'spotify_authorise';
     }
+    public function getAlias(): string
+    {
+        return $this->alias;
+    }
+    public function saveAccessToken(User $user, AccessToken $accessToken): void
+    {
+        // Save the access token in the database for the user
+        // You can use your own implementation here to save the token in your database
+        // For example, you can create a new RemoteAuthorisation entity and save it to the database
+        $user->getOrAddRemoteAuthorisation($this->alias)
+            ->setAccessToken($accessToken);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+
+    }
+    public function saveRefreshToken(User $user, RefreshToken $refreshToken): void
+    {
+        // Save the refresh token in the database for the user
+        // You can use your own implementation here to save the token in your database
+        // For example, you can create a new RemoteAuthorisation entity and save it to the database
+        $user->getOrAddRemoteAuthorisation($this->alias)
+            ->setRefreshToken($refreshToken);
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
+
 }
